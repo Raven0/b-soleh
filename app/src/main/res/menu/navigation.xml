@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_schedule"
+        android:icon="@drawable/icon_jadwal_abu"
+        android:title="@string/prayer_time" />
+
+    <item
+        android:id="@+id/nav_qibla"
+        android:icon="@drawable/icon_kiblat"
+        android:title="@string/qibla_direction" />
+
+    <item
+        android:id="@+id/nav_calculation"
+        android:icon="@drawable/icon_kalk_zakat"
+        android:title="@string/zakat_calculation" />
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/icon_pengaturan"
+        android:title="@string/settings" />
+
+</menu>

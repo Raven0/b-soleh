@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">bSoleh</string>
+    <string name="prayer_time">Prayer</string>
+    <string name="qibla_direction">Qibla</string>
+    <string name="zakat_calculation">Zakat</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -21,8 +21,58 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Services Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    //Firebase Library
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.1'
+
+    //Crashlytics Library
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+
+    //Multidex Library
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //Retrofit Library
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    //Dialog Library
+    implementation 'com.yarolegovich:lovely-dialog:1.1.0'
+
+    //Toasty Library
+    implementation 'com.github.GrenderG:Toasty:1.3.0'
+
+    //Picasso Library
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //Okhttp
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //Compass View
+    implementation 'com.github.art2limit:Compass-View:1.0.3'
+
+    //Dimen SDP Library
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    //Half circle progress bar
+    implementation 'com.shimaami.android:progressview:1.0'
+
+    //Material CalendarView
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+
+    //CurrencyEditText
+    implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
 }
