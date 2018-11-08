@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.birutekno.bsoleh.R;
+import com.birutekno.bsoleh.constant.Constant;
 import com.birutekno.bsoleh.util.SharedPreference;
 
 import butterknife.BindView;
@@ -95,8 +96,8 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
         float degree = Math.round(sensorEvent.values[0]);
 
         Location destinationLoc = new Location("service Provider");
-        destinationLoc.setLatitude(21.422487); //kaaba latitude setting
-        destinationLoc.setLongitude(39.826206); //kaaba longitude setting
+        destinationLoc.setLatitude(Constant.KAABA_LATITUDE); //kaaba latitude setting
+        destinationLoc.setLongitude(Constant.KAABA_LONGITUDE); //kaaba longitude setting
 
         //bearTo = The angle from true north to the destination location from the point we're your currently standing.(asal image k N se destination taak angle )
         float bearTo = userLoc.bearingTo(destinationLoc);
