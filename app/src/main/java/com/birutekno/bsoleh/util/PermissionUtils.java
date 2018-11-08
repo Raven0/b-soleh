@@ -22,8 +22,7 @@ import java.util.Map;
  * Created by Jaison on 02/05/17.
  */
 
-public class PermissionUtils
-{
+public class PermissionUtils {
 
     Context context;
     Activity current_activity;

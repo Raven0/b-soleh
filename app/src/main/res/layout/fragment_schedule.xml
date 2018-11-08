@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,13 +23,16 @@
                 android:src="@drawable/banner"/>
 
             <TextView
+                android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_7sdp"
                 android:layout_centerHorizontal="true"
                 android:padding="@dimen/_7sdp"
                 android:background="@drawable/background_location"
-                android:text="Grand Sharon Utara, Cipamokolan, Bandung 40292, Indonesia"
+                android:text="Click Here or Swipe Down to get your current Address"
+                android:textAlignment="center"
+                android:lines="1"
                 android:textSize="11sp"
                 android:textColor="@color/colorWhite"/>
 
@@ -54,6 +58,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvCurrentPrayerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ashar"
@@ -61,6 +66,7 @@
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
+                    android:id="@+id/tvCurrentPrayerTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15:10"
@@ -68,6 +74,7 @@
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
+                    android:id="@+id/tvCountdownPrayerTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="02:32:00"
@@ -85,12 +92,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvCurrentCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kota Bandung"
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
+                    android:id="@+id/tvCityWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20°"
@@ -107,12 +116,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvSelectedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Selasa, 30 Oktober 2018"
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
+                    android:id="@+id/tvHijriDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="21 Safar 1440H"
@@ -211,6 +222,7 @@
                                 android:layout_alignParentRight="true" />
 
                             <TextView
+                                android:id="@+id/tvSubuhPrayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/swSubuh"
@@ -244,6 +256,7 @@
                                 android:layout_alignParentRight="true" />
 
                             <TextView
+                                android:id="@+id/tvDzuhurPrayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/swDzuhur"
@@ -278,6 +291,7 @@
                                 android:layout_alignParentRight="true" />
 
                             <TextView
+                                android:id="@+id/tvAsrPrayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/swAshar"
@@ -311,6 +325,7 @@
                                 android:layout_alignParentRight="true" />
 
                             <TextView
+                                android:id="@+id/tvMagribPrayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/swMagrib"
@@ -346,6 +361,7 @@
                                 android:textColorHighlight="@color/colorPrimary"/>
 
                             <TextView
+                                android:id="@+id/tvIshaPrayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/swIsya"
