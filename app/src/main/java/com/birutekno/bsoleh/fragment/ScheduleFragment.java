@@ -298,7 +298,8 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
             String address1 = locationAddress.getAddressLine(1);
 
             String TAG = "READTHIS";
-
+            Log.d(TAG, "getAddress: Latitude = " + latitude);
+            Log.d(TAG, "getAddress: Longitude = " + longitude);
             Log.d(TAG, "getAddress: getPhone = " + locationAddress.getPhone());
             Log.d(TAG, "getAddress: getLocality = " + locationAddress.getLocality());
             Log.d(TAG, "getAddress: getAddressLine = " + locationAddress.getAddressLine(0));

@@ -52,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Application Preferences"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlack"/>
 
             </RelativeLayout>
@@ -75,13 +76,29 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/notifikasi"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/ivPermission"
-                    android:text="Notification Permission"
-                    android:textColor="@color/colorBlack"/>
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Notification Permission"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Turn On Notification"
+                        android:textSize="11sp"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
 
                 <Switch
                     android:id="@+id/swPermission"
@@ -186,6 +203,52 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rlPrayerSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_4sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:clickable="true"
+                android:paddingBottom="@dimen/_4sdp">
+
+                <ImageView
+                    android:id="@+id/ivPrayerTime"
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/pengingat_adzan"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivPrayerTime"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Prayer Times"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Prayer Times Settings"
+                        android:textSize="11sp"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
@@ -217,6 +280,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Application Settings &amp; Info"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlack"/>
 
             </RelativeLayout>

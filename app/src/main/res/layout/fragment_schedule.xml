@@ -194,6 +194,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="Prayer Notification"
+                                android:textStyle="bold"
                                 android:textColor="@color/colorBlack"/>
 
                         </RelativeLayout>

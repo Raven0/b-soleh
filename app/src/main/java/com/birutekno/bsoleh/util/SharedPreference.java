@@ -58,4 +58,30 @@ public class SharedPreference {
         return prefs;
     }
 
+    public void setSharedPrefPrayer(String method, String methodName, String school, String schoolName, String lat, String latName){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_PRAYER, context.MODE_PRIVATE).edit();
+        editor.putString("method", method);
+        editor.putString("methodName", methodName);
+        editor.putString("school", school);
+        editor.putString("schoolName", schoolName);
+        editor.putString("lat", lat);
+        editor.putString("latName", latName);
+        editor.apply();
+    }
+
+    public void setSharedPrefTuning(String subuh, String dzuhur, String asr, String magrib, String isya){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_PRAYER, context.MODE_PRIVATE).edit();
+        editor.putString("subuh", subuh);
+        editor.putString("dzuhur", dzuhur);
+        editor.putString("asr", asr);
+        editor.putString("magrib", magrib);
+        editor.putString("isya", isya);
+        editor.apply();
+    }
+
+    public SharedPreferences getSharedPrefPrayer(){
+        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_PRAYER, context.MODE_PRIVATE);
+        return prefs;
+    }
+
 }

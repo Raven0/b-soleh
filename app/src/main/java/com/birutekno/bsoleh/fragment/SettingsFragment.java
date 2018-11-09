@@ -1,5 +1,6 @@
 package com.birutekno.bsoleh.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.birutekno.bsoleh.PrayerSettingsActivity;
 import com.birutekno.bsoleh.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class SettingsFragment extends Fragment{
@@ -62,5 +65,10 @@ public class SettingsFragment extends Fragment{
                 tvSound.setText("" + paramInt + "%"); // here in textView the percent will be shown
             }
         });
+    }
+
+    @OnClick(R.id.rlPrayerSettings)
+    public void rlPrayerSettings(){
+        startActivity(new Intent(getContext(), PrayerSettingsActivity.class));
     }
 }
