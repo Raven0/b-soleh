@@ -108,9 +108,6 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
     String school;
     String lat;
 
-    boolean sharedPrefBool;
-    String sharedPrefYear;
-
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.tvAddress) TextView tvAddress;
@@ -215,12 +212,6 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
         lat = preferences.getString("lat", "1");
         tuning = tuneSubuh + "," + tuneDzuhur + "," + tuneAshar + "," + tuneMagrib + "," + tuneIsya;
 
-        Log.d(Constant.TAG, "loadSetting: 1");
-        SharedPreferences preferenceCache = sharedPreference.getSharedPrefPrayerCachePref();
-        sharedPrefBool = preferenceCache.getBoolean("prayer_cache_bool", false);
-        sharedPrefYear = preferenceCache.getString("prayer_cache_year", null);
-        Log.d(Constant.TAG, "loadSetting: 2");
-
         Date todayDate = Calendar.getInstance().getTime();
         String todayString = formatterShow.format(todayDate);
         date = formatter.format(todayDate);
@@ -255,7 +246,7 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
             toastUtil.makeToast(formatter.format(dateConvert),"",false);
             tvSelectedDate.setText(formatterShow.format(dateConvert));
             String year = formatter.format(dateConvert).substring(6,10);
-            if (sharedPrefBool && sharedPrefYear.equals(year)){
+            if (dataCache.getPrayerBool(year)){
                 Log.d(Constant.TAG, "CACHE: 1");
                 getPrayerTimeCache(formatter.format(dateConvert));
             }else {
@@ -423,7 +414,7 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
                 Log.d(Constant.TAG, "FOUR");
                 String year = date.substring(6,10);
                 Log.d(Constant.TAG, "FIVE");
-                if (sharedPrefBool && sharedPrefYear.equals(year)){
+                if (dataCache.getPrayerBool(year)){
                     Log.d(Constant.TAG, "CACHE: 2");
                     getPrayerTimeCache(date);
                 }else {

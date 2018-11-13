@@ -108,8 +108,13 @@ public class SharedPreference {
         return prefs.getString("prayer_cache", null);
     }
 
-    public SharedPreferences getSharedPrefPrayerCachePref(){
+    public String getSharedPrefPrayerCacheYear(){
         SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
-        return prefs;
+        return prefs.getString("prayer_cache_year", null);
+    }
+
+    public boolean getSharedPrefPrayerCacheBool(){
+        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
+        return prefs.getBoolean("prayer_cache_bool", false);
     }
 }
