@@ -1,11 +1,13 @@
 package com.birutekno.bsoleh.model;
 
-class Date {
+public class Date {
     private String timestamp;
 
     private String readable;
 
     private Gregorian gregorian;
+
+    private Hijri hijri;
 
     public String getTimestamp ()
     {
@@ -35,6 +37,16 @@ class Date {
     public void setGregorian (Gregorian gregorian)
     {
         this.gregorian = gregorian;
+    }
+
+    public Hijri getHijri ()
+    {
+        return hijri;
+    }
+
+    public void setHijri (Hijri hijri)
+    {
+        this.hijri = hijri;
     }
 
 }

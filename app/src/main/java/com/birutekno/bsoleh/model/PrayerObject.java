@@ -17,8 +17,7 @@ public class PrayerObject {
         this.status = status;
     }
 
-    public DataPrayer getDataPrayer ()
-    {
+    public DataPrayer getDataPrayer () {
         return data;
     }
 

@@ -19,9 +19,8 @@ public class Timings {
 
     private String Maghrib;
 
-    public String getFajr ()
-    {
-        return Fajr;
+    public String getFajr () {
+        return splitter(Fajr);
     }
 
     public void setFajr (String Fajr)
@@ -29,9 +28,8 @@ public class Timings {
         this.Fajr = Fajr;
     }
 
-    public String getIsha ()
-    {
-        return Isha;
+    public String getIsha () {
+        return splitter(Isha);
     }
 
     public void setIsha (String Isha)
@@ -39,9 +37,8 @@ public class Timings {
         this.Isha = Isha;
     }
 
-    public String getAsr ()
-    {
-        return Asr;
+    public String getAsr () {
+        return splitter(Asr);
     }
 
     public void setAsr (String Asr)
@@ -49,9 +46,8 @@ public class Timings {
         this.Asr = Asr;
     }
 
-    public String getDhuhr ()
-    {
-        return Dhuhr;
+    public String getDhuhr () {
+        return splitter(Dhuhr);
     }
 
     public void setDhuhr (String Dhuhr)
@@ -59,9 +55,8 @@ public class Timings {
         this.Dhuhr = Dhuhr;
     }
 
-    public String getMidnight ()
-    {
-        return Midnight;
+    public String getMidnight () {
+        return splitter(Midnight);
     }
 
     public void setMidnight (String Midnight)
@@ -69,9 +64,8 @@ public class Timings {
         this.Midnight = Midnight;
     }
 
-    public String getSunset ()
-    {
-        return Sunset;
+    public String getSunset () {
+        return splitter(Sunset);
     }
 
     public void setSunset (String Sunset)
@@ -79,9 +73,8 @@ public class Timings {
         this.Sunset = Sunset;
     }
 
-    public String getSunrise ()
-    {
-        return Sunrise;
+    public String getSunrise () {
+        return splitter(Sunrise);
     }
 
     public void setSunrise (String Sunrise)
@@ -89,9 +82,8 @@ public class Timings {
         this.Sunrise = Sunrise;
     }
 
-    public String getImsak ()
-    {
-        return Imsak;
+    public String getImsak () {
+        return splitter(Imsak);
     }
 
     public void setImsak (String Imsak)
@@ -99,9 +91,8 @@ public class Timings {
         this.Imsak = Imsak;
     }
 
-    public String getMaghrib ()
-    {
-        return Maghrib;
+    public String getMaghrib () {
+        return splitter(Maghrib);
     }
 
     public void setMaghrib (String Maghrib)
@@ -109,9 +100,13 @@ public class Timings {
         this.Maghrib = Maghrib;
     }
 
+    private String splitter(String args){
+        String[] parts = args.split(" ");
+        return parts[0];
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return  "Imsak = "+Imsak+
                 "\nFajr = "+Fajr+
                 "\nSunrise = "+Sunrise+

@@ -46,6 +46,17 @@ public class SharedPreference {
         return prefs.getString("location", null);
     }
 
+    public void setSharedPrefCity(String sharedPrefLocation){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_LOCATION, context.MODE_PRIVATE).edit();
+        editor.putString("city", sharedPrefLocation);
+        editor.apply();
+    }
+
+    public String getSharedPrefCity(){
+        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_LOCATION, context.MODE_PRIVATE);
+        return prefs.getString("city", null);
+    }
+
     public void setSharedPrefLatlng(double latitude, double longitude ){
         SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_LATLNG, context.MODE_PRIVATE).edit();
         editor.putLong("latitude", Double.doubleToRawLongBits(latitude));
@@ -84,4 +95,21 @@ public class SharedPreference {
         return prefs;
     }
 
+    public void setSharedPrefPrayerCache(String args, String year, boolean bool){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE).edit();
+        editor.putString("prayer_cache", args);
+        editor.putString("prayer_cache_year", year);
+        editor.putBoolean("prayer_cache_bool", bool);
+        editor.apply();
+    }
+
+    public String getSharedPrefPrayerCache(){
+        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
+        return prefs.getString("prayer_cache", null);
+    }
+
+    public SharedPreferences getSharedPrefPrayerCachePref(){
+        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
+        return prefs;
+    }
 }

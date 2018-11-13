@@ -2,6 +2,7 @@ package com.birutekno.bsoleh.constant;
 
 public class Constant {
 
+    public static final String TAG = "TAG";
     //API Endpoint
     public static final String BASE_URL_API = "http://api.aladhan.com/v1/";
 
@@ -11,6 +12,7 @@ public class Constant {
     public static final String PREFS_LOCATION = "LOCATION";
     public static final String PREFS_LATLNG = "LATLNG";
     public static final String PREFS_PRAYER = "PRAYER";
+    public static final String PREFS_CACHE = "DATA_CACHE";
 
     //LATLONG QIBLA
     public static final double KAABA_LATITUDE = 21.422487;
