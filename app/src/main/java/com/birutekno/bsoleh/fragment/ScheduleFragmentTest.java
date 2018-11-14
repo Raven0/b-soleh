@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,6 +112,10 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
 
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.rlOverview) RelativeLayout rlOverview;
+
+    @BindView(R.id.pbOverview) ProgressBar pbOverview;
+
     @BindView(R.id.tvAddress) TextView tvAddress;
 
     @BindView(R.id.progressView) ProgressView progressView;
@@ -198,6 +204,9 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
         widget.state().edit()
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
+
+        rlOverview.setVisibility(View.GONE);
+        pbOverview.setVisibility(View.VISIBLE);
     }
 
     private void loadPrayerSetting(){
@@ -567,6 +576,10 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
     }
 
     private void setPrayerTime(Timings timings, com.birutekno.bsoleh.model.Date dateData){
+
+        rlOverview.setVisibility(View.VISIBLE);
+        pbOverview.setVisibility(View.GONE);
+
         tvSubuhPrayer.setText(timings.getFajr());
         tvDzuhurPrayer.setText(timings.getDhuhr());
         tvAsrPrayer.setText(timings.getAsr());
@@ -584,6 +597,7 @@ public class ScheduleFragmentTest extends Fragment implements OnDateSelectedList
 
     @Override
     public void onRefresh() {
+        loadPrayerSetting();
         if (checkPlayServices()){
             buildGoogleApiClient();
             swipeRefreshLayout.setRefreshing(false);

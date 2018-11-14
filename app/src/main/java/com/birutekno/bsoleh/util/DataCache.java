@@ -15,7 +15,8 @@ public class DataCache {
 
     SharedPreference sharedPreference;
     String year;
-    boolean aBoolean;
+    boolean prefBool;
+    boolean returnBool;
 
     public DataCache(Context context) {
         sharedPreference = new SharedPreference(context);
@@ -37,8 +38,7 @@ public class DataCache {
 
     public boolean getPrayerBool(String year){
         new AsyncCaller().execute();
-        Log.d(Constant.TAG, "onPreExecute: 3");
-        if (aBoolean && year.equals(this.year)){
+        if (prefBool && year.equals(this.year)){
             return true;
         }else {
             return false;
@@ -54,8 +54,8 @@ public class DataCache {
         @Override
         protected Void doInBackground(Void... params) {
             Log.d(Constant.TAG, "onPreExecute: 1");
+            prefBool = sharedPreference.getSharedPrefPrayerCacheBool();
             year = sharedPreference.getSharedPrefPrayerCacheYear();
-            aBoolean = sharedPreference.getSharedPrefPrayerCacheBool();
             Log.d(Constant.TAG, "onPreExecute: 2");
             return null;
         }

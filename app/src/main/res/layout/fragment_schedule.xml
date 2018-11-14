@@ -36,103 +36,117 @@
                 android:textSize="11sp"
                 android:textColor="@color/colorWhite"/>
 
-            <com.progress.progressview.ProgressView
-                android:id="@+id/progressView"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlOverview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:visibility="gone">
+
+                <com.progress.progressview.ProgressView
+                    android:id="@+id/progressView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:pvProgressColor="@color/colorPrimary"
+                    app:pvBackgroundColor="@color/colorWhite"
+                    app:pvBackgroundWidth="5dp"
+                    app:pvProgressWidth="7dp"
+                    app:pvDirection="fromLeft"
+                    app:pvShape="arc"
+                    app:pvProgress="0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignBottom="@id/progressView"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCurrentPrayerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prayer"
+                        android:textSize="22sp"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvCurrentPrayerTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--:--"
+                        android:textSize="32sp"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvCountdownPrayerTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--:--:--"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCurrentCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kota Bandung"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvCityWeather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20°"
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSelectedDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- ---- ----"
+                        android:textColor="@color/colorWhite"/>
+
+                    <!--android:text="Selasa, 30 Oktober 2018"-->
+
+
+                    <TextView
+                        android:id="@+id/tvHijriDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- ---- ----"
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/pbOverview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                app:pvProgressColor="@color/colorPrimary"
-                app:pvBackgroundColor="@color/colorWhite"
-                app:pvBackgroundWidth="5dp"
-                app:pvProgressWidth="7dp"
-                app:pvDirection="fromLeft"
-                app:pvShape="arc"
-                app:pvProgress="0" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_alignBottom="@id/progressView"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvCurrentPrayerName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prayer"
-                    android:textSize="22sp"
-                    android:textColor="@color/colorWhite"/>
-
-                <TextView
-                    android:id="@+id/tvCurrentPrayerTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--:--"
-                    android:textSize="32sp"
-                    android:textColor="@color/colorWhite"/>
-
-                <TextView
-                    android:id="@+id/tvCountdownPrayerTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--:--:--"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/_8sdp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvCurrentCity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kota Bandung"
-                    android:textColor="@color/colorWhite"/>
-
-                <TextView
-                    android:id="@+id/tvCityWeather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20°"
-                    android:textColor="@color/colorWhite"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/_8sdp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSelectedDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-- ---- ----"
-                    android:textColor="@color/colorWhite"/>
-
-                <!--android:text="Selasa, 30 Oktober 2018"-->
-
-
-                <TextView
-                    android:id="@+id/tvHijriDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-- ---- ----"
-                    android:textColor="@color/colorWhite"/>
-
-            </LinearLayout>
+                android:layout_centerVertical="true"/>
 
         </RelativeLayout>
 
