@@ -103,6 +103,12 @@ public class SharedPreference {
         editor.apply();
     }
 
+    public void setSharedPrefPrayerCacheBool(){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE).edit();
+        editor.putBoolean("prayer_cache_bool", false);
+        editor.apply();
+    }
+
     public String getSharedPrefPrayerCache(){
         SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
         return prefs.getString("prayer_cache", null);

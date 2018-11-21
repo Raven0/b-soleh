@@ -45,4 +45,7 @@ public class Constant {
     public static final String[] LAT_ID = {"1","2","3"};
     public static final String[] LAT_NAME = {"1. Middle of the Night", "2. One Seventh", "3. Angle Based"};
 
+    //Zakat Constant
+    public static final float RICE_KG = (float) 2.5;
+
 }

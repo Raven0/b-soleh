@@ -16,11 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.birutekno.bsoleh.R;
 import com.birutekno.bsoleh.api.PrayerApi;
+import com.birutekno.bsoleh.constant.Constant;
 import com.birutekno.bsoleh.decorators.HighlightWeekendsDecorator;
 import com.birutekno.bsoleh.decorators.MySelectorDecorator;
 import com.birutekno.bsoleh.decorators.OneDayDecorator;
@@ -28,6 +31,20 @@ import com.birutekno.bsoleh.model.DataPrayer;
 import com.birutekno.bsoleh.model.Hijri;
 import com.birutekno.bsoleh.model.PrayerObject;
 import com.birutekno.bsoleh.model.Timings;
+import com.birutekno.bsoleh.model._1;
+import com.birutekno.bsoleh.model._10;
+import com.birutekno.bsoleh.model._11;
+import com.birutekno.bsoleh.model._12;
+import com.birutekno.bsoleh.model._2;
+import com.birutekno.bsoleh.model._3;
+import com.birutekno.bsoleh.model._4;
+import com.birutekno.bsoleh.model._5;
+import com.birutekno.bsoleh.model._6;
+import com.birutekno.bsoleh.model._7;
+import com.birutekno.bsoleh.model._8;
+import com.birutekno.bsoleh.model._9;
+import com.birutekno.bsoleh.util.DataCache;
+import com.birutekno.bsoleh.util.PermissionUtils;
 import com.birutekno.bsoleh.util.SharedPreference;
 import com.birutekno.bsoleh.util.ToastUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -52,11 +69,13 @@ import org.threeten.bp.LocalDate;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,8 +89,12 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     private final static int PLAY_SERVICES_REQUEST = 1000;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
 
+    PermissionUtils permissionUtils;
+    ArrayList<String> permissions=new ArrayList<>();
+
     SharedPreference sharedPreference;
     ToastUtil toastUtil;
+    DataCache dataCache;
 
     private Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
@@ -83,6 +106,7 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
+    SimpleDateFormat formatterShow = new SimpleDateFormat("dd MMMM YYYY");
     String date;
     String method;
     String tuning;
@@ -96,11 +120,23 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
 
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.rlOverview) RelativeLayout rlOverview;
+
+    @BindView(R.id.pbOverview) ProgressBar pbOverview;
+
     @BindView(R.id.tvAddress) TextView tvAddress;
 
     @BindView(R.id.progressView) ProgressView progressView;
 
+    @BindView(R.id.tvCurrentPrayerName) TextView tvCurrentPrayerName;
+
+    @BindView(R.id.tvCurrentPrayerTime) TextView tvCurrentPrayerTime;
+
+    @BindView(R.id.tvCountdownPrayerTime) TextView tvCountdownPrayerTime;
+
     @BindView(R.id.calendarView) MaterialCalendarView widget;
+
+    @BindView(R.id.tvCurrentCity) TextView tvCurrentCity;
 
     @BindView(R.id.tvSelectedDate) TextView tvSelectedDate;
 
@@ -126,8 +162,7 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         initViews(view);
         return view;
@@ -144,19 +179,26 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
 
         sharedPreference = new SharedPreference(getContext());
         toastUtil = new ToastUtil(getContext());
+        dataCache = new DataCache(getContext());
 
         if (sharedPreference.getSharedPrefLocation() == null){
+            Log.d(Constant.TAG, "initViews: 1");
             OpenDialog(view);
         }else {
+            Log.d(Constant.TAG, "initViews: 2");
             tvAddress.setText(sharedPreference.getSharedPrefLocation());
+            tvCurrentCity.setText(sharedPreference.getSharedPrefCity());
         }
 
-        if (checkPlayServices()){
-            buildGoogleApiClient();
-        }else {
+        try {
+            Log.d(Constant.TAG, "initViews: 3");
             getLocation();
+        }catch (Exception ex){
+            Log.d(Constant.TAG, "initViews: 4");
+            buildGoogleApiClient();
         }
 
+        Log.d(Constant.TAG, "initViews: 5");
         initWidget();
         loadPrayerSetting();
 
@@ -164,8 +206,8 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
 
         //Meter progress Initialization
         //ranged from 0.0f to 1f
-        float floatone = 0.68f;
-        progressView.setProgress(floatone);
+//        float floatone = 0.68f;
+//        progressView.setProgress(floatone);
     }
 
     private void initWidget(){
@@ -181,6 +223,9 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         widget.state().edit()
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
+
+        rlOverview.setVisibility(View.GONE);
+        pbOverview.setVisibility(View.VISIBLE);
     }
 
     private void loadPrayerSetting(){
@@ -196,23 +241,25 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         tuning = tuneSubuh + "," + tuneDzuhur + "," + tuneAshar + "," + tuneMagrib + "," + tuneIsya;
 
         Date todayDate = Calendar.getInstance().getTime();
-        String todayString = formatter.format(todayDate);
-        date = todayString;
-        tvSelectedDate.setText(date);
+        String todayString = formatterShow.format(todayDate);
+        date = formatter.format(todayDate);
+        tvSelectedDate.setText(todayString);
+        tvHijriDate.setText("please");
+        dataCache.new AsyncCaller().execute();
     }
 
     @OnClick(R.id.progressView)
     public void progressView(){
-        float progress = r.nextFloat();
-        progressView.setProgress(progress);
+//        float progress = r.nextFloat();
+//        progressView.setProgress(progress);
     }
 
     @OnClick(R.id.tvAddress)
     public void tvAddress(){
-        if (checkPlayServices()){
-            buildGoogleApiClient();
-        }else {
+        try {
             getLocation();
+        }catch (Exception ex){
+            buildGoogleApiClient();
         }
     }
 
@@ -225,9 +272,15 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date dateConvert = format.parse(calendarDate);
-            toastUtil.makeToast(formatter.format(dateConvert),"",false);
-            tvSelectedDate.setText(formatter.format(dateConvert));
-            getPrayerTime(formatter.format(dateConvert), currentLocation, method, tuning, school, lat);
+            tvSelectedDate.setText(formatterShow.format(dateConvert));
+            String year = formatter.format(dateConvert).substring(6,10);
+            if (dataCache.getPrayerBool(year)){
+                Log.d(Constant.TAG, "CACHE: 1");
+                getPrayerTimeCache(formatter.format(dateConvert));
+            }else {
+                Log.d(Constant.TAG, "onDateSelected: 1");
+                getPrayerTime(formatter.format(dateConvert));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -297,6 +350,7 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 
+        Log.d(Constant.TAG, "initViews: BEF");
         result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
             @Override
             public void onResult(LocationSettingsResult locationSettingsResult) {
@@ -306,9 +360,11 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location requests here
+                        Log.d(Constant.TAG, "initViews: SUCCESS");
                         getLocation();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.d(Constant.TAG, "initViews: REQUIRED");
                         try {
                             // Show the dialog by calling startResolutionForResult(),
                             // and check the result in onActivityResult().
@@ -319,6 +375,7 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.d(Constant.TAG, "initViews: UNAVAILABLE");
                         break;
                 }
             }
@@ -331,9 +388,13 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         try
         {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-            getAddress();
+            if (mLastLocation == null){
+                buildGoogleApiClient();
+            }else {
+                latitude = mLastLocation.getLatitude();
+                longitude = mLastLocation.getLongitude();
+                getAddress();
+            }
         }
         catch (SecurityException e)
         {
@@ -386,21 +447,38 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
             Log.d(TAG, "getAddress: getUrl = " + locationAddress.getUrl());
 
             if(!TextUtils.isEmpty(address)) {
+                Log.d(Constant.TAG, "ONE");
                 currentLocation=address;
                 if (!TextUtils.isEmpty(address1)){
+                    Log.d(Constant.TAG, "TWO");
                     currentLocation+="\n"+address1;
                 }
+                Log.d(Constant.TAG, "THREE");
                 tvAddress.setText(currentLocation);
+                tvCurrentCity.setText(locationAddress.getLocality());
                 sharedPreference.setSharedPrefLocation(currentLocation);
+                sharedPreference.setSharedPrefCity(locationAddress.getLocality());
                 sharedPreference.setSharedPrefLatlng(latitude,longitude);
-
-                getPrayerTime(date, currentLocation, method, tuning, school, lat);
+                Log.d(Constant.TAG, "FOUR");
+                String year = date.substring(6,10);
+                Log.d(Constant.TAG, "FIVE");
+                if (dataCache.getPrayerBool(year)){
+                    Log.d(Constant.TAG, "CACHE: 2");
+                    getPrayerTimeCache(date);
+                }else {
+                    Log.d(Constant.TAG, "onDateSelected: 2");
+                    getPrayerTime(date);
+                }
             }
         }
     }
 
-    private void getPrayerTime(String date, String address, String method, String tune, String school, String lat){
-        Call<PrayerObject> result = PrayerApi.getAPIService().getTimingByAddress(date, address, method, tune, school, lat);
+    private void getPrayerTime(String date){
+        final String month = date.substring(3,5);
+        final String day = date.substring(0,2);
+        final String year = date.substring(6,10);
+//        toastUtil.makeToast("day " + day.replaceFirst("^0+(?!$)", "") + " month : " + month  + " year : " +year,"",false);
+        Call<PrayerObject> result = PrayerApi.getAPIService().getCalendarByAddress(currentLocation, year, true, method, tuning, school, lat, "1");
         result.enqueue(new Callback<PrayerObject>() {
             @Override
             public void onResponse(Call<PrayerObject> call, retrofit2.Response<PrayerObject> response) {
@@ -409,23 +487,14 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
                         String status = response.body().getStatus();
                         if (status.equals("OK")) {
                             DataPrayer dataPrayer = response.body().getDataPrayer();
-                            Timings timings = dataPrayer.getTimings();
-                            com.birutekno.bsoleh.model.Date dateData = dataPrayer.getDate();
-                            tvSubuhPrayer.setText(timings.getFajr());
-                            tvDzuhurPrayer.setText(timings.getDhuhr());
-                            tvAsrPrayer.setText(timings.getAsr());
-                            tvMagribPrayer.setText(timings.getMaghrib());
-                            tvIshaPrayer.setText(timings.getIsha());
+                            dataCache.setPrayerCache(dataPrayer, year);
+                            com.birutekno.bsoleh.model.Date dateData = getDate(dataPrayer, day, month);
+                            Timings timings = getTimings(dataPrayer, day, month);
 
-                            Hijri hijri = dateData.getHijri();
-                            String day = hijri.getDay();
-                            com.birutekno.bsoleh.model.Month month = hijri.getMonth();
-                            String monthName = month.getEn();
-                            String year = hijri.getYear();
-
-                            tvHijriDate.setText(day + " " + monthName + " " + year + "H");
+                            setPrayerTime(timings, dateData);
 
                             toastUtil.makeToast("Success","success",true);
+                            dataCache.new AsyncCaller().execute();
                         }else{
                             toastUtil.makeToast("Failed to fetch json","error",false);
                         }
@@ -442,16 +511,225 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         });
     }
 
+    private void getPrayerTimeCache(String date){
+        Log.d(Constant.TAG, "THIS 1");
+        try {
+            final String month = date.substring(3,5);
+            final String day = date.substring(0,2);
+
+            DataPrayer dataPrayer = dataCache.getPrayerCache();
+            com.birutekno.bsoleh.model.Date dateData = getDate(dataPrayer, day, month);
+            Timings timings = getTimings(dataPrayer, day, month);
+
+            Log.d(Constant.TAG, "THIS 2");
+            setPrayerTime(timings, dateData);
+        }catch (Exception ex){
+            Log.d(Constant.TAG, "onDateSelected: 3");
+            getPrayerTime(date);
+        }
+    }
+
+    private Timings getTimings(DataPrayer dataPrayer, String day, String month){
+        Timings timings = new Timings();
+        if (month.equals("01")){
+            _1[] monthModel = dataPrayer.get_1();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("02")){
+            _2[] monthModel = dataPrayer.get_2();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("03")){
+            _3[] monthModel = dataPrayer.get_3();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("04")){
+            _4[] monthModel = dataPrayer.get_4();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("05")){
+            _5[] monthModel = dataPrayer.get_5();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("06")){
+            _6[] monthModel = dataPrayer.get_6();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("07")){
+            _7[] monthModel = dataPrayer.get_7();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("08")){
+            _8[] monthModel = dataPrayer.get_8();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("09")){
+            _9[] monthModel = dataPrayer.get_9();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("10")){
+            _10[] monthModel = dataPrayer.get_10();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("11")){
+            _11[] monthModel = dataPrayer.get_11();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }else if (month.equals("12")){
+            _12[] monthModel = dataPrayer.get_12();
+            timings = monthModel[Integer.parseInt(day)-1].getTimings();
+        }
+
+        return timings;
+    }
+
+    private com.birutekno.bsoleh.model.Date getDate(DataPrayer dataPrayer, String day, String month){
+        com.birutekno.bsoleh.model.Date dateData = new com.birutekno.bsoleh.model.Date();
+        if (month.equals("01")){
+            _1[] monthModel = dataPrayer.get_1();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("02")){
+            _2[] monthModel = dataPrayer.get_2();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("03")){
+            _3[] monthModel = dataPrayer.get_3();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("04")){
+            _4[] monthModel = dataPrayer.get_4();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("05")){
+            _5[] monthModel = dataPrayer.get_5();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("06")){
+            _6[] monthModel = dataPrayer.get_6();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("07")){
+            _7[] monthModel = dataPrayer.get_7();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("08")){
+            _8[] monthModel = dataPrayer.get_8();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("09")){
+            _9[] monthModel = dataPrayer.get_9();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("10")){
+            _10[] monthModel = dataPrayer.get_10();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("11")){
+            _11[] monthModel = dataPrayer.get_11();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }else if (month.equals("12")){
+            _12[] monthModel = dataPrayer.get_12();
+            dateData = monthModel[Integer.parseInt(day)-1].getDate();
+        }
+
+        return dateData;
+    }
+
+    private void setPrayerTime(Timings timings, com.birutekno.bsoleh.model.Date dateData){
+
+        rlOverview.setVisibility(View.VISIBLE);
+        pbOverview.setVisibility(View.GONE);
+
+        tvSubuhPrayer.setText(timings.getFajr());
+        tvDzuhurPrayer.setText(timings.getDhuhr());
+        tvAsrPrayer.setText(timings.getAsr());
+        tvMagribPrayer.setText(timings.getMaghrib());
+        tvIshaPrayer.setText(timings.getIsha());
+
+        Hijri hijri = dateData.getHijri();
+        String day = hijri.getDay();
+        com.birutekno.bsoleh.model.Month month = hijri.getMonth();
+        String monthName = month.getEn();
+        String year = hijri.getYear();
+
+        tvHijriDate.setText(day + " " + monthName + " " + year + "H");
+
+        realtimeClock();
+    }
+
+    private void realtimeClock(){
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        if (getActivity() != null){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    long date = System.currentTimeMillis();
+                                    long difference = System.currentTimeMillis();
+                                    long differenceProgress = System.currentTimeMillis();
+
+                                    String diff;
+                                    SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat clockDetailFormat = new SimpleDateFormat("HH:mm:ss");
+                                    try {
+                                        String clockString = clockDetailFormat.format(date);
+                                        Date currentTime = clockDetailFormat.parse(clockString);
+                                        Date subuhTime = clockFormat.parse(tvSubuhPrayer.getText().toString());
+                                        Date dzuhurTime = clockFormat.parse(tvDzuhurPrayer.getText().toString());
+                                        Date asharTime = clockFormat.parse(tvAsrPrayer.getText().toString());
+                                        Date magribTime = clockFormat.parse(tvMagribPrayer.getText().toString());
+                                        Date isyaTime = clockFormat.parse(tvIshaPrayer.getText().toString());
+
+                                        if (currentTime.compareTo(subuhTime) < 0){
+                                            tvCurrentPrayerName.setText("Subuh");
+                                            tvCurrentPrayerTime.setText(tvSubuhPrayer.getText().toString());
+                                            difference = currentTime.getTime() - subuhTime.getTime();
+                                            differenceProgress = isyaTime.getTime() - subuhTime.getTime();
+                                        }else if (currentTime.compareTo(dzuhurTime) < 0){
+                                            tvCurrentPrayerName.setText("Dzuhur");
+                                            tvCurrentPrayerTime.setText(tvDzuhurPrayer.getText().toString());
+                                            difference = currentTime.getTime() - dzuhurTime.getTime();
+                                            differenceProgress = subuhTime.getTime() - dzuhurTime.getTime();
+                                        }else if (currentTime.compareTo(asharTime) < 0){
+                                            tvCurrentPrayerName.setText("Ashar");
+                                            tvCurrentPrayerTime.setText(tvAsrPrayer.getText().toString());
+                                            difference = currentTime.getTime() - asharTime.getTime();
+                                            differenceProgress = dzuhurTime.getTime() - asharTime.getTime();
+                                        }else if (currentTime.compareTo(magribTime) < 0){
+                                            tvCurrentPrayerName.setText("Magrib");
+                                            tvCurrentPrayerTime.setText(tvMagribPrayer.getText().toString());
+                                            difference = currentTime.getTime() - magribTime.getTime();
+                                            differenceProgress = asharTime.getTime() - magribTime.getTime();
+                                        }else if (currentTime.compareTo(isyaTime) < 0){
+                                            tvCurrentPrayerName.setText("Isya");
+                                            tvCurrentPrayerTime.setText(tvIshaPrayer.getText().toString());
+                                            difference = currentTime.getTime() - isyaTime.getTime();
+                                            differenceProgress = magribTime.getTime() - isyaTime.getTime();
+                                        }
+                                        int sec = (int) (difference / 1000) % 60 ;
+                                        int min = (int) ((difference  / (1000*60)) % 60);
+                                        int hrs = (int) ((difference  / (1000*60*60)) % 24);
+                                        hrs = (hrs< 0 ? -hrs: hrs);
+                                        min = (min< 0 ? -min: min);
+                                        sec = (sec< 0 ? -sec: sec);
+                                        diff = hrs+":"+min+":"+sec;
+
+                                        long diffInSec = TimeUnit.MILLISECONDS.toSeconds(difference);
+                                        long diffinSecProgress = TimeUnit.MILLISECONDS.toSeconds(differenceProgress);
+                                        diffInSec = (diffInSec<0 ? -diffInSec: diffInSec);
+                                        diffinSecProgress = (diffinSecProgress<0 ? -diffinSecProgress: diffinSecProgress);
+
+                                        Log.i(Constant.TAG, "run: " + diffInSec + " | " + diffinSecProgress + " test : " + diffInSec * diffinSecProgress / 100000000f);
+
+                                        progressView.setProgress(diffInSec * diffinSecProgress / 100000000f);
+                                        tvCountdownPrayerTime.setText(diff);
+
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t.start();
+    }
+
     @Override
     public void onRefresh() {
-        if (checkPlayServices()){
-            buildGoogleApiClient();
-            swipeRefreshLayout.setRefreshing(false);
-            toastUtil.makeToast("Data & Location Refreshed", "success", true);
-        }else {
+        try {
             getLocation();
-            swipeRefreshLayout.setRefreshing(false);
-            toastUtil.makeToast("Data & Location Refreshed", "success", true);
+        }catch (Exception ex){
+            buildGoogleApiClient();
         }
+        swipeRefreshLayout.setRefreshing(false);
+        toastUtil.makeToast("Data & Location Refreshed", "success", true);
     }
 }

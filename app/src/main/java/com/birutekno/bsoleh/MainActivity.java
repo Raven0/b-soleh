@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.birutekno.bsoleh.fragment.CalculationFragment;
 import com.birutekno.bsoleh.fragment.QiblaFragment;
-import com.birutekno.bsoleh.fragment.ScheduleFragmentTest;
+import com.birutekno.bsoleh.fragment.ScheduleFragment;
 import com.birutekno.bsoleh.fragment.SettingsFragment;
 import com.birutekno.bsoleh.util.ActivityUtils;
 import com.birutekno.bsoleh.util.PermissionUtils;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 Fragment fragment   = null;
                 switch (item.getItemId()) {
                     case R.id.nav_schedule:
-                        fragment = new ScheduleFragmentTest();
+                        fragment = new ScheduleFragment();
                         break;
                     case R.id.nav_qibla:
                         fragment = new QiblaFragment();
@@ -72,16 +72,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         };
         //Default Page
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), new ScheduleFragmentTest(), R.id.frame);
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), new ScheduleFragment(), R.id.frame);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //Permission
-        if (!sharedPreference.getSharedPrefGooglePermission()){
-            permissionUtils = new PermissionUtils(MainActivity.this);
-            permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
-            permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-            permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-        }
+        permissionUtils = new PermissionUtils(MainActivity.this);
+        permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
     }
 
     @Override

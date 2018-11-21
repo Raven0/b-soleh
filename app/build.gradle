@@ -46,5 +46,5 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.shimaami.android:progressview:1.0'
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
-    implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
+    implementation 'com.aldoapps:autoformatedittext:0.9.3'
 }

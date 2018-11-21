@@ -6,9 +6,12 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.birutekno.bsoleh.R;
+import com.birutekno.bsoleh.constant.Constant;
+import com.birutekno.bsoleh.util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +19,8 @@ import butterknife.OnClick;
 
 
 public class CalculationFragment extends Fragment {
+
+    ToastUtil toastUtil;
 
     @BindView(R.id.nsZakatMaal)
     NestedScrollView nsZakatMaal;
@@ -28,6 +33,21 @@ public class CalculationFragment extends Fragment {
 
     @BindView(R.id.llZakatFitrah)
     LinearLayout llZakatFitrah;
+
+    @BindView(R.id.etBeras)
+    EditText etBeras;
+
+    @BindView(R.id.etSoulValue)
+    EditText etSoulValue;
+
+    @BindView(R.id.etSoulQty)
+    EditText etSoulQty;
+
+    @BindView(R.id.etFitrahMoney)
+    EditText etFitrahMoney;
+
+    @BindView(R.id.etFitrahWeight)
+    EditText etFitrahWeight;
 
     public CalculationFragment() {
 
@@ -54,6 +74,7 @@ public class CalculationFragment extends Fragment {
 
     private void initViews(View view){
         ButterKnife.bind(this, view);
+        toastUtil = new ToastUtil(view.getContext());
     }
 
     @OnClick(R.id.llZakatMaal)
@@ -72,4 +93,25 @@ public class CalculationFragment extends Fragment {
         nsZakatFitrah.setVisibility(View.VISIBLE);
     }
 
+    @OnClick(R.id.btnCalculateFitrah)
+    public  void btnCalculateFitrah(){
+        calculateFitrah();
+    }
+
+    private void calculateFitrah(){
+        float priceBeras;
+        float soulValue;
+        int soulQty;
+        float fitrahMoney;
+        float fitrahWeight;
+
+        priceBeras = Float.parseFloat(etBeras.getText().toString().replace(",",""));
+        soulValue = priceBeras * Constant.RICE_KG;
+        etSoulValue.setText(String.valueOf(soulValue));
+        soulQty = Integer.parseInt(etSoulQty.getText().toString().replace(",",""));
+        fitrahMoney = soulValue * soulQty;
+        fitrahWeight = soulValue / Constant.RICE_KG;
+        etFitrahMoney.setText(String.valueOf(fitrahMoney));
+        etFitrahWeight.setText(String.valueOf(fitrahWeight));
+    }
 }

@@ -84,6 +84,7 @@ public class PrayerSettingsActivity extends AppCompatActivity {
                 // of the selected item
                 Toast.makeText(PrayerSettingsActivity.this, Constant.METHOD_NAME[which], Toast.LENGTH_SHORT).show();
                 sharedPreference.setSharedPrefPrayer(Constant.METHOD_ID[which], Constant.METHOD_NAME[which], school, schoolName, lat, latName);
+                sharedPreference.setSharedPrefPrayerCacheBool();
                 finish();
                 startActivity(getIntent());
             }
@@ -235,6 +236,7 @@ public class PrayerSettingsActivity extends AppCompatActivity {
                 String tuning = tunes[0] + "," + tunes[1] + "," + tunes[2] + "," + tunes[3] + "," + tunes[4];
                 Toast.makeText(PrayerSettingsActivity.this, tuning, Toast.LENGTH_SHORT).show();
                 sharedPreference.setSharedPrefTuning(tunes[0], tunes[1], tunes[2], tunes[3], tunes[4]);
+                sharedPreference.setSharedPrefPrayerCacheBool();
                 finish();
                 startActivity(getIntent());
                 dialog.dismiss();
@@ -253,6 +255,7 @@ public class PrayerSettingsActivity extends AppCompatActivity {
                 // of the selected item
                 Toast.makeText(PrayerSettingsActivity.this, Constant.SCHOOL_NAME[which], Toast.LENGTH_SHORT).show();
                 sharedPreference.setSharedPrefPrayer(method, methodName, Constant.SCHOOL_ID[which], Constant.SCHOOL_NAME[which], lat, latName);
+                sharedPreference.setSharedPrefPrayerCacheBool();
                 finish();
                 startActivity(getIntent());
 
@@ -270,6 +273,7 @@ public class PrayerSettingsActivity extends AppCompatActivity {
                 // of the selected item
                 Toast.makeText(PrayerSettingsActivity.this, Constant.LAT_NAME[which], Toast.LENGTH_SHORT).show();
                 sharedPreference.setSharedPrefPrayer(method, methodName, school, schoolName, Constant.LAT_ID[which], Constant.LAT_NAME[which]);
+                sharedPreference.setSharedPrefPrayerCacheBool();
                 finish();
                 startActivity(getIntent());
             }

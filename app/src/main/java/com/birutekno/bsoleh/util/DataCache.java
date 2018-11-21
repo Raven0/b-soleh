@@ -37,10 +37,11 @@ public class DataCache {
     }
 
     public boolean getPrayerBool(String year){
-        new AsyncCaller().execute();
         if (prefBool && year.equals(this.year)){
+            Log.d(Constant.TAG, "onPreExecute: 3 TRUE");
             return true;
         }else {
+            Log.d(Constant.TAG, "onPreExecute: 3 FALSE");
             return false;
         }
     }

@@ -47,13 +47,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    app:pvProgressColor="@color/colorPrimary"
-                    app:pvBackgroundColor="@color/colorWhite"
+                    app:pvProgressColor="@color/colorWhite"
+                    app:pvBackgroundColor="@color/colorPrimary"
                     app:pvBackgroundWidth="5dp"
                     app:pvProgressWidth="7dp"
-                    app:pvDirection="fromLeft"
+                    app:pvDirection="fromRight"
                     app:pvShape="arc"
-                    app:pvProgress="0" />
+                    app:pvProgress="1" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

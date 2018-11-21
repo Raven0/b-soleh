@@ -137,9 +137,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -179,9 +180,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -221,9 +223,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -263,9 +266,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input_disabled"
                             android:focusable="false"
@@ -306,9 +310,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -348,9 +353,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -421,9 +427,10 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input_disabled"
                             android:focusable="false"
@@ -505,9 +512,11 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etBeras"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -547,9 +556,11 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etSoulValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -581,9 +592,11 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etSoulQty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input"
                             />
@@ -623,9 +636,11 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etFitrahMoney"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input_disabled"
                             android:focusable="false"
@@ -647,9 +662,11 @@
                             android:textColor="@color/colorWhite"
                             android:background="@drawable/background_currency"/>
 
-                        <com.blackcat.currencyedittext.CurrencyEditText
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etFitrahWeight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/background_input_disabled"
                             android:focusable="false"
@@ -660,6 +677,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btnCalculateFitrah"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
