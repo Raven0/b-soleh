@@ -2,6 +2,8 @@ package com.birutekno.bsoleh.constant;
 
 public class Constant {
 
+    public static final int ALARM_REQUEST_CODE = 133;
+
     public static final String TAG = "TAG";
     //API Endpoint
     public static final String BASE_URL_API = "http://api.aladhan.com/v1/";
@@ -46,6 +48,7 @@ public class Constant {
     public static final String[] LAT_NAME = {"1. Middle of the Night", "2. One Seventh", "3. Angle Based"};
 
     //Zakat Constant
-    public static final float RICE_KG = (float) 2.5;
+    public static final long RICE_LITRE = (long) 3.5;
+    public static final int NISHAB_CALC = (int) 85;
 
 }

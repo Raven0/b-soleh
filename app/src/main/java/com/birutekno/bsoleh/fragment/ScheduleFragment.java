@@ -1,6 +1,10 @@
 package com.birutekno.bsoleh.fragment;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -18,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +49,7 @@ import com.birutekno.bsoleh.model._7;
 import com.birutekno.bsoleh.model._8;
 import com.birutekno.bsoleh.model._9;
 import com.birutekno.bsoleh.util.DataCache;
-import com.birutekno.bsoleh.util.PermissionUtils;
+import com.birutekno.bsoleh.util.MyReceiver;
 import com.birutekno.bsoleh.util.SharedPreference;
 import com.birutekno.bsoleh.util.ToastUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,12 +74,10 @@ import org.threeten.bp.LocalDate;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -89,24 +92,25 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     private final static int PLAY_SERVICES_REQUEST = 1000;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
 
-    PermissionUtils permissionUtils;
-    ArrayList<String> permissions=new ArrayList<>();
-
     SharedPreference sharedPreference;
     ToastUtil toastUtil;
     DataCache dataCache;
 
     private Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
-    double latitude;
-    double longitude;
-    String currentLocation;
-    private Random r = new Random(1);
+    private double latitude;
+    private double longitude;
+    private String currentLocation;
 
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
-    SimpleDateFormat formatterShow = new SimpleDateFormat("dd MMMM YYYY");
+    private SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat clockHour = new SimpleDateFormat("HH");
+    private SimpleDateFormat clockMinutes = new SimpleDateFormat("mm");
+    private SimpleDateFormat clockDetailFormat = new SimpleDateFormat("HH:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
+    private SimpleDateFormat formatterShow = new SimpleDateFormat("dd MMMM YYYY");
+
     String date;
     String method;
     String tuning;
@@ -118,39 +122,35 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     String school;
     String lat;
 
+    boolean masterNotifBool;
+    boolean subuhBool;
+    boolean dzuhurBool;
+    boolean asharBool;
+    boolean magribBool;
+    boolean isyaBool;
+
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
-
     @BindView(R.id.rlOverview) RelativeLayout rlOverview;
-
     @BindView(R.id.pbOverview) ProgressBar pbOverview;
-
     @BindView(R.id.tvAddress) TextView tvAddress;
-
     @BindView(R.id.progressView) ProgressView progressView;
-
     @BindView(R.id.tvCurrentPrayerName) TextView tvCurrentPrayerName;
-
     @BindView(R.id.tvCurrentPrayerTime) TextView tvCurrentPrayerTime;
-
     @BindView(R.id.tvCountdownPrayerTime) TextView tvCountdownPrayerTime;
-
     @BindView(R.id.calendarView) MaterialCalendarView widget;
-
     @BindView(R.id.tvCurrentCity) TextView tvCurrentCity;
-
     @BindView(R.id.tvSelectedDate) TextView tvSelectedDate;
-
     @BindView(R.id.tvHijriDate) TextView tvHijriDate;
-
     @BindView(R.id.tvSubuhPrayer) TextView tvSubuhPrayer;
-
+    @BindView(R.id.swSubuh) Switch swSubuh;
     @BindView(R.id.tvDzuhurPrayer) TextView tvDzuhurPrayer;
-
+    @BindView(R.id.swDzuhur) Switch swDzuhur;
     @BindView(R.id.tvAsrPrayer) TextView tvAsrPrayer;
-
+    @BindView(R.id.swAshar) Switch swAshar;
     @BindView(R.id.tvMagribPrayer) TextView tvMagribPrayer;
-
+    @BindView(R.id.swMagrib) Switch swMagrib;
     @BindView(R.id.tvIshaPrayer) TextView tvIshaPrayer;
+    @BindView(R.id.swIsya) Switch swIsya;
 
     public ScheduleFragment() {
 
@@ -168,7 +168,6 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         return view;
     }
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -180,34 +179,32 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         sharedPreference = new SharedPreference(getContext());
         toastUtil = new ToastUtil(getContext());
         dataCache = new DataCache(getContext());
+        swipeRefreshLayout.setOnRefreshListener(this);
 
-        if (sharedPreference.getSharedPrefLocation() == null){
-            Log.d(Constant.TAG, "initViews: 1");
-            OpenDialog(view);
-        }else {
-            Log.d(Constant.TAG, "initViews: 2");
-            tvAddress.setText(sharedPreference.getSharedPrefLocation());
-            tvCurrentCity.setText(sharedPreference.getSharedPrefCity());
-        }
-
-        try {
-            Log.d(Constant.TAG, "initViews: 3");
-            getLocation();
-        }catch (Exception ex){
-            Log.d(Constant.TAG, "initViews: 4");
-            buildGoogleApiClient();
-        }
-
-        Log.d(Constant.TAG, "initViews: 5");
         initWidget();
         loadPrayerSetting();
 
-        swipeRefreshLayout.setOnRefreshListener(this);
+        if (sharedPreference.getSharedPrefLocation() == null){
+            OpenDialog(view);
+        }else {
+            if (date != null){
+                String year = date.substring(6,10);
+                if (dataCache.getPrayerBool(year)){
+                    tvAddress.setText(sharedPreference.getSharedPrefLocation());
+                    tvCurrentCity.setText(sharedPreference.getSharedPrefCity());
+                    getPrayerTimeCache(date);
+                }else {
+                    try {
+                        getLocation();
+                    }catch (Exception ex){
+                        buildGoogleApiClient();
+                    }
+                }
+            }else {
+                OpenDialog(view);
+            }
+        }
 
-        //Meter progress Initialization
-        //ranged from 0.0f to 1f
-//        float floatone = 0.68f;
-//        progressView.setProgress(floatone);
     }
 
     private void initWidget(){
@@ -238,29 +235,27 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         tuneIsya = preferences.getString("isya", "0");
         school = preferences.getString("school", "0");
         lat = preferences.getString("lat", "1");
+
+        masterNotifBool = preferences.getBoolean("prayer_notif_master", false);
+        subuhBool = preferences.getBoolean("prayer_notif_subuh", false);
+        dzuhurBool = preferences.getBoolean("prayer_notif_dzuhur", false);
+        asharBool = preferences.getBoolean("prayer_notif_ashar", false);
+        magribBool = preferences.getBoolean("prayer_notif_magrib", false);
+        isyaBool = preferences.getBoolean("prayer_notif_isya", false);
+
+        swSubuh.setChecked(subuhBool);
+        swDzuhur.setChecked(dzuhurBool);
+        swAshar.setChecked(asharBool);
+        swMagrib.setChecked(magribBool);
+        swIsya.setChecked(isyaBool);
+
         tuning = tuneSubuh + "," + tuneDzuhur + "," + tuneAshar + "," + tuneMagrib + "," + tuneIsya;
 
         Date todayDate = Calendar.getInstance().getTime();
         String todayString = formatterShow.format(todayDate);
         date = formatter.format(todayDate);
         tvSelectedDate.setText(todayString);
-        tvHijriDate.setText("please");
         dataCache.new AsyncCaller().execute();
-    }
-
-    @OnClick(R.id.progressView)
-    public void progressView(){
-//        float progress = r.nextFloat();
-//        progressView.setProgress(progress);
-    }
-
-    @OnClick(R.id.tvAddress)
-    public void tvAddress(){
-        try {
-            getLocation();
-        }catch (Exception ex){
-            buildGoogleApiClient();
-        }
     }
 
     @Override
@@ -292,17 +287,16 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     public void OpenDialog(View view){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setMessage("We need to get your location");
-                alertDialogBuilder.setPositiveButton("yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                if (checkPlayServices()){
-                                    buildGoogleApiClient();
-                                }else {
-                                    getLocation();
-                                }
-                            }
-                        });
+        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                if (checkPlayServices()){
+                    buildGoogleApiClient();
+                }else {
+                    getLocation();
+                }
+            }
+        });
 
         alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
             @Override
@@ -405,14 +399,16 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     public Address getAddress(double latitude, double longitude) {
         Geocoder geocoder;
         List<Address> addresses;
-        geocoder = new Geocoder(getContext(), Locale.getDefault());
+        if (getContext() != null){
+            geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-        try {
-            addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            return addresses.get(0);
+            try {
+                addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                return addresses.get(0);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
@@ -427,46 +423,20 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
             String address = locationAddress.getAddressLine(0);
             String address1 = locationAddress.getAddressLine(1);
 
-            String TAG = "READTHIS";
-            Log.d(TAG, "getAddress: Latitude = " + latitude);
-            Log.d(TAG, "getAddress: Longitude = " + longitude);
-            Log.d(TAG, "getAddress: getPhone = " + locationAddress.getPhone());
-            Log.d(TAG, "getAddress: getLocality = " + locationAddress.getLocality());
-            Log.d(TAG, "getAddress: getAddressLine = " + locationAddress.getAddressLine(0));
-            Log.d(TAG, "getAddress: getAdminArea = " + locationAddress.getAdminArea());
-            Log.d(TAG, "getAddress: getCountryCode = " + locationAddress.getCountryCode());
-            Log.d(TAG, "getAddress: getCountryName = " + locationAddress.getCountryName());
-            Log.d(TAG, "getAddress: getFeatureName = " + locationAddress.getFeatureName());
-            Log.d(TAG, "getAddress: getLocale = " + locationAddress.getLocale());
-            Log.d(TAG, "getAddress: getPostalCode = " + locationAddress.getPostalCode());
-            Log.d(TAG, "getAddress: getPremises = " + locationAddress.getPremises());
-            Log.d(TAG, "getAddress: getSubAdminArea = " + locationAddress.getSubAdminArea());
-            Log.d(TAG, "getAddress: getSubLocality = " + locationAddress.getSubLocality());
-            Log.d(TAG, "getAddress: getSubThoroughfare = " + locationAddress.getSubThoroughfare());
-            Log.d(TAG, "getAddress: getThoroughfare = " + locationAddress.getThoroughfare());
-            Log.d(TAG, "getAddress: getUrl = " + locationAddress.getUrl());
-
             if(!TextUtils.isEmpty(address)) {
-                Log.d(Constant.TAG, "ONE");
                 currentLocation=address;
                 if (!TextUtils.isEmpty(address1)){
-                    Log.d(Constant.TAG, "TWO");
                     currentLocation+="\n"+address1;
                 }
-                Log.d(Constant.TAG, "THREE");
                 tvAddress.setText(currentLocation);
                 tvCurrentCity.setText(locationAddress.getLocality());
                 sharedPreference.setSharedPrefLocation(currentLocation);
                 sharedPreference.setSharedPrefCity(locationAddress.getLocality());
                 sharedPreference.setSharedPrefLatlng(latitude,longitude);
-                Log.d(Constant.TAG, "FOUR");
                 String year = date.substring(6,10);
-                Log.d(Constant.TAG, "FIVE");
                 if (dataCache.getPrayerBool(year)){
-                    Log.d(Constant.TAG, "CACHE: 2");
                     getPrayerTimeCache(date);
                 }else {
-                    Log.d(Constant.TAG, "onDateSelected: 2");
                     getPrayerTime(date);
                 }
             }
@@ -477,7 +447,6 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         final String month = date.substring(3,5);
         final String day = date.substring(0,2);
         final String year = date.substring(6,10);
-//        toastUtil.makeToast("day " + day.replaceFirst("^0+(?!$)", "") + " month : " + month  + " year : " +year,"",false);
         Call<PrayerObject> result = PrayerApi.getAPIService().getCalendarByAddress(currentLocation, year, true, method, tuning, school, lat, "1");
         result.enqueue(new Callback<PrayerObject>() {
             @Override
@@ -627,14 +596,14 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         tvIshaPrayer.setText(timings.getIsha());
 
         Hijri hijri = dateData.getHijri();
-        String day = hijri.getDay();
         com.birutekno.bsoleh.model.Month month = hijri.getMonth();
+        String day = hijri.getDay();
         String monthName = month.getEn();
         String year = hijri.getYear();
-
         tvHijriDate.setText(day + " " + monthName + " " + year + "H");
 
         realtimeClock();
+        setPrayerReminder();
     }
 
     private void realtimeClock(){
@@ -651,12 +620,10 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
                                     long date = System.currentTimeMillis();
                                     long difference = System.currentTimeMillis();
                                     long differenceProgress = System.currentTimeMillis();
-
+                                    String clockString = clockDetailFormat.format(date);
                                     String diff;
-                                    SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
-                                    SimpleDateFormat clockDetailFormat = new SimpleDateFormat("HH:mm:ss");
+
                                     try {
-                                        String clockString = clockDetailFormat.format(date);
                                         Date currentTime = clockDetailFormat.parse(clockString);
                                         Date subuhTime = clockFormat.parse(tvSubuhPrayer.getText().toString());
                                         Date dzuhurTime = clockFormat.parse(tvDzuhurPrayer.getText().toString());
@@ -703,9 +670,18 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
                                         diffInSec = (diffInSec<0 ? -diffInSec: diffInSec);
                                         diffinSecProgress = (diffinSecProgress<0 ? -diffinSecProgress: diffinSecProgress);
 
-                                        Log.i(Constant.TAG, "run: " + diffInSec + " | " + diffinSecProgress + " test : " + diffInSec * diffinSecProgress / 100000000f);
+                                        float diffSqr = (float) Math.pow(diffinSecProgress, 2);
 
-                                        progressView.setProgress(diffInSec * diffinSecProgress / 100000000f);
+//                                        Log.i(Constant.TAG, "run: " + diffInSec + " | " + diffinSecProgress + " test : " + diffInSec * diffinSecProgress / diffSqr);
+//
+//                                        if (diffInSec == 5500){
+//                                            alarmIntent.putExtra("prayer", tvCurrentPrayerName.getText().toString());
+//                                            pendingIntent = PendingIntent.getBroadcast(getContext(), Constant.ALARM_REQUEST_CODE, alarmIntent, 0);
+//                                            Log.d(Constant.TAG, "alarm" + tvCurrentPrayerName.getText().toString() + " has been armed for : " + 30);
+//                                            triggerAlarmManager(30);
+//                                        }
+
+                                        progressView.setProgress(diffInSec * diffinSecProgress / diffSqr);
                                         tvCountdownPrayerTime.setText(diff);
 
                                     } catch (ParseException e) {
@@ -720,6 +696,117 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
             }
         };
         t.start();
+    }
+
+    private void setPrayerReminder(){
+        Intent notifyIntent = new Intent(getContext(), MyReceiver.class);
+
+        String subuh = tvSubuhPrayer.getText().toString();
+        notifyIntent.putExtra("prayer", "Subuh");
+        triggerAlarmManager(subuh, notifyIntent,1);
+
+        String dzuhur = tvDzuhurPrayer.getText().toString();
+        notifyIntent.putExtra("prayer", "Dzuhur");
+        triggerAlarmManager(dzuhur, notifyIntent, 2);
+
+        String ashar = tvAsrPrayer.getText().toString();
+        notifyIntent.putExtra("prayer", "Ashar");
+        triggerAlarmManager(ashar, notifyIntent, 3);
+
+        String magrib = tvMagribPrayer.getText().toString();
+        notifyIntent.putExtra("prayer", "Magrib");
+        triggerAlarmManager(magrib, notifyIntent, 4);
+
+        String isya = tvIshaPrayer.getText().toString();
+        notifyIntent.putExtra("prayer", "Isya");
+        triggerAlarmManager(isya, notifyIntent, 5);
+    }
+
+    private void triggerAlarmManager(String hour, Intent notifyIntent, int requestCode) {
+        String[] parts = hour.split(":");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(parts[0]));
+        cal.set(Calendar.MINUTE, Integer.parseInt(parts[1]));
+        cal.set(Calendar.SECOND, 0);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, notifyIntent.putExtra("time", cal.getTimeInMillis()), PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Log.d(Constant.TAG, "triggerAlarmManager: " +  notifyIntent.getStringExtra("prayer") + " : " + cal.getTimeInMillis());
+    }
+
+    @OnClick(R.id.tvAddress)
+    public void tvAddress(){
+        try {
+            getLocation();
+        }catch (Exception ex){
+            buildGoogleApiClient();
+        }
+    }
+
+    @OnClick(R.id.swSubuh)
+    public void swSubuh(){
+        if (!subuhBool){
+            subuhBool = true;
+            sharedPreference.setSharedPrefPrayerNotif("1", subuhBool);
+            setPrayerReminder();
+        }else {
+            subuhBool = false;
+            sharedPreference.setSharedPrefPrayerNotif("1", subuhBool);
+            setPrayerReminder();
+        }
+    }
+
+    @OnClick(R.id.swDzuhur)
+    public void swDzuhur(){
+        if (!dzuhurBool){
+            dzuhurBool= true;
+            sharedPreference.setSharedPrefPrayerNotif("2", dzuhurBool);
+            setPrayerReminder();
+        }else {
+            dzuhurBool = false;
+            sharedPreference.setSharedPrefPrayerNotif("2", dzuhurBool);
+            setPrayerReminder();
+        }
+    }
+
+    @OnClick(R.id.swAshar)
+    public void swAshar(){
+        if (!asharBool){
+            asharBool = true;
+            sharedPreference.setSharedPrefPrayerNotif("3", asharBool);
+            setPrayerReminder();
+        }else {
+            asharBool = false;
+            sharedPreference.setSharedPrefPrayerNotif("3", asharBool);
+            setPrayerReminder();
+        }
+    }
+
+    @OnClick(R.id.swMagrib)
+    public void swMagrib(){
+        if (!magribBool){
+            magribBool = true;
+            sharedPreference.setSharedPrefPrayerNotif("4", magribBool);
+            setPrayerReminder();
+        }else {
+            magribBool = false;
+            sharedPreference.setSharedPrefPrayerNotif("4", magribBool);
+            setPrayerReminder();
+        }
+    }
+
+    @OnClick(R.id.swIsya)
+    public void swIsya(){
+        if (!isyaBool){
+            isyaBool = true;
+            sharedPreference.setSharedPrefPrayerNotif("5", isyaBool);
+            setPrayerReminder();
+        }else {
+            isyaBool = false;
+            sharedPreference.setSharedPrefPrayerNotif("5", isyaBool);
+            setPrayerReminder();
+        }
     }
 
     @Override

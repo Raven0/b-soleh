@@ -123,4 +123,26 @@ public class SharedPreference {
         SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_CACHE, context.MODE_PRIVATE);
         return prefs.getBoolean("prayer_cache_bool", false);
     }
+
+    public void setSharedPrefPrayerNotif(String s, boolean bool){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_PRAYER, context.MODE_PRIVATE).edit();
+        if (s.equals("1")){
+            editor.putBoolean("prayer_notif_subuh", bool);
+        }else if (s.equals("2")){
+            editor.putBoolean("prayer_notif_dzuhur", bool);
+        }else if (s.equals("3")){
+            editor.putBoolean("prayer_notif_ashar", bool);
+        }else if (s.equals("4")){
+            editor.putBoolean("prayer_notif_magrib", bool);
+        }else if (s.equals("5")){
+            editor.putBoolean("prayer_notif_isya", bool);
+        }
+        editor.apply();
+    }
+
+    public void setSharedPrefPrayerMaster(boolean bool){
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_PRAYER, context.MODE_PRIVATE).edit();
+        editor.putBoolean("prayer_notif_master", bool);
+        editor.apply();
+    }
 }

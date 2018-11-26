@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "827979243404",
+    "firebase_url": "https://b-soleh.firebaseio.com",
+    "project_id": "b-soleh",
+    "storage_bucket": "b-soleh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827979243404:android:fd31a8905661eb51",
+        "android_client_info": {
+          "package_name": "com.birutekno.bsoleh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827979243404-po0512na4ppf2sedabbdqognv5qc1j60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.birutekno.bsoleh",
+            "certificate_hash": "355e76b96471a407770d0f128d2b3177068ff402"
+          }
+        },
+        {
+          "client_id": "827979243404-3ajhke3dq08mplmg0tgerbpjc6kh9cg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW3oxMxygcZ92PX6jJD0g2fYOIN5TyM5A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827979243404-3ajhke3dq08mplmg0tgerbpjc6kh9cg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

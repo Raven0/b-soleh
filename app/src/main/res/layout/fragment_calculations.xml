@@ -4,6 +4,8 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -40,7 +42,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/llZakatMaal"
+                android:id="@+id/llZakatFitrah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_6sdp"
@@ -53,14 +55,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Zakat Maal"
+                    android:text="Zakat Fitrah"
                     android:textSize="@dimen/_13sdp"
                     android:textColor="@color/colorWhite"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llZakatFitrah"
+                android:id="@+id/llZakatMaal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_6sdp"
@@ -73,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Zakat Fitrah"
+                    android:text="Zakat Maal"
                     android:textSize="@dimen/_13sdp"
                     android:textColor="@color/colorWhite"/>
 
@@ -84,7 +86,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nsZakatMaal"
+        android:id="@+id/nsZakatFitrah"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible">
@@ -121,382 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_4sdp"
                         android:layout_centerVertical="true"
-                        android:text="Tabungan"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Deposito"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Emas dan Perak"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Jumlah"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input_disabled"
-                            android:focusable="false"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Nishab (Setara 85 gram Emas)"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Harga Emas per Gram"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Wajib Membayar Zakat Maal?"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_30sdp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Zakat Anda"
-                        android:textColor="@color/colorBlack"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Rp"
-                            android:textColor="@color/colorWhite"
-                            android:background="@drawable/background_currency"/>
-
-                        <com.aldoapps.autoformatedittext.AutoFormatEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:isDecimal="true"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input_disabled"
-                            android:focusable="false"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:layout_marginRight="@dimen/_12sdp"
-                    android:text="Hitung"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/background_button"/>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </android.support.v4.widget.NestedScrollView>
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nsZakatFitrah"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:cardElevation="@dimen/_2sdp"
-            app:cardCornerRadius="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:layout_marginLeft="@dimen/_7sdp"
-            android:layout_marginRight="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_50sdp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_7sdp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:layout_centerVertical="true"
-                        android:text="Harga Beras Saat Ini"
+                        android:text="Harga Beras Saat Ini (Per Liter)"
                         android:textColor="@color/colorBlack"/>
 
                     <LinearLayout
@@ -540,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_4sdp"
                         android:layout_centerVertical="true"
-                        android:text="Zakat Fitrah Per Jiwa (2,5kg)"
+                        android:text="Zakat Fitrah Per Orang (3,5 Liter)"
                         android:textColor="@color/colorBlack"/>
 
                     <LinearLayout
@@ -562,7 +189,8 @@
                             android:layout_height="wrap_content"
                             app:isDecimal="true"
                             android:padding="@dimen/_4sdp"
-                            android:background="@drawable/background_input"
+                            android:focusable="false"
+                            android:background="@drawable/background_input_disabled"
                             />
 
                     </LinearLayout>
@@ -652,6 +280,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <TextView
@@ -678,6 +307,377 @@
 
                 <Button
                     android:id="@+id/btnCalculateFitrah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
+                    android:text="Hitung"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/background_button"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsZakatMaal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginLeft="@dimen/_7sdp"
+            android:layout_marginRight="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_50sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_7sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Jumlah Kekayaan"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Uang"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etUang"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Properti"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etProperti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Emas, Perak dan Batu Berharga"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etJewerly"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Lainnya"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etOther"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Total Kekayaan"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input_disabled"
+                            android:focusable="false"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Harga Emas per Gram"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etGoldperGram"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Nishab Zakat"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etNishab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input_disabled"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Zakat Anda"
+                        android:textColor="@color/colorBlack"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Rp"
+                            android:textColor="@color/colorWhite"
+                            android:background="@drawable/background_currency"/>
+
+                        <com.aldoapps.autoformatedittext.AutoFormatEditText
+                            android:id="@+id/etZakatMaal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:isDecimal="true"
+                            android:padding="@dimen/_4sdp"
+                            android:background="@drawable/background_input_disabled"
+                            android:focusable="false"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnCalculateMaal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
