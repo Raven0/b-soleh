@@ -14,18 +14,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashscreenActivity">
+        <activity android:name=".SplashscreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HijrahActivity" />
+        <activity android:name=".HijrahActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".PrayerSettingsActivity" />
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PrayerSettingsActivity"
+            android:screenOrientation="portrait"/>
         <receiver
             android:name=".util.MyReceiver"
             android:enabled="true"

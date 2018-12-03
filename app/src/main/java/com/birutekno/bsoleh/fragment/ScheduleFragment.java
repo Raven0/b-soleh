@@ -108,8 +108,8 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
     private SimpleDateFormat clockHour = new SimpleDateFormat("HH");
     private SimpleDateFormat clockMinutes = new SimpleDateFormat("mm");
     private SimpleDateFormat clockDetailFormat = new SimpleDateFormat("HH:mm:ss");
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
-    private SimpleDateFormat formatterShow = new SimpleDateFormat("dd MMMM YYYY");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat formatterShow = new SimpleDateFormat("dd MMMM yyyy");
 
     String date;
     String method;
@@ -249,7 +249,8 @@ public class ScheduleFragment extends Fragment implements OnDateSelectedListener
         swMagrib.setChecked(magribBool);
         swIsya.setChecked(isyaBool);
 
-        tuning = tuneSubuh + "," + tuneDzuhur + "," + tuneAshar + "," + tuneMagrib + "," + tuneIsya;
+        //Imsak,Fajr,Sunrise,Zhuhr,Asr,Sunset,Maghrib,Isha,Midnight
+        tuning = "0," + tuneSubuh + "," + "0," + tuneDzuhur + "," + tuneAshar + "," + "0," +tuneMagrib + "," + tuneIsya + "0,";
 
         Date todayDate = Calendar.getInstance().getTime();
         String todayString = formatterShow.format(todayDate);

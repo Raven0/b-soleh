@@ -50,25 +50,15 @@ public class MyNewIntentService extends IntentService {
 
         if (masterNotifBool){
             if (prayerName.equals("Subuh") && subuhBool){
-                if (System.currentTimeMillis() < intent.getLongExtra("time",0)){
-                    managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-                }
+                managerCompat.notify(NOTIFICATION_ID, notificationCompat);
             }else if (prayerName.equals("Dzuhur") && dzuhurBool){
-                if (System.currentTimeMillis() < intent.getLongExtra("time",0)){
-                    managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-                }
+                managerCompat.notify(NOTIFICATION_ID, notificationCompat);
             }else if (prayerName.equals("Ashar") && asharBool){
-                if (System.currentTimeMillis() < intent.getLongExtra("time",0)){
-                    managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-                }
+                managerCompat.notify(NOTIFICATION_ID, notificationCompat);
             }else if (prayerName.equals("Magrib") && magribBool){
-                if (System.currentTimeMillis() < intent.getLongExtra("time",0)){
-                    managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-                }
+                managerCompat.notify(NOTIFICATION_ID, notificationCompat);
             }else if (prayerName.equals("Isya") && isyaBool){
-                if (System.currentTimeMillis() < intent.getLongExtra("time",0)){
-                    managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-                }
+                managerCompat.notify(NOTIFICATION_ID, notificationCompat);
             }
         }
     }

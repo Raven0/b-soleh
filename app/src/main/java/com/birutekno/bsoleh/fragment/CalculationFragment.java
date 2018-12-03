@@ -128,7 +128,7 @@ public class CalculationFragment extends Fragment {
                     priceBeras = 0;
                 } else {
                     try {
-                        priceBeras = Long.parseLong(etBeras.getText().toString().replace(",",""));
+                        priceBeras = Long.parseLong(etBeras.getText().toString().replace(",","").replace(".",""));
                         soulValue = priceBeras * Constant.RICE_LITRE;
                         etSoulValue.setText(String.valueOf(soulValue));
                     }catch (Exception ex){
@@ -153,7 +153,7 @@ public class CalculationFragment extends Fragment {
                     valueUang = 0;
                 } else {
                     try {
-                        valueUang = Long.parseLong(etUang.getText().toString().replace(",",""));
+                        valueUang = Long.parseLong(etUang.getText().toString().replace(",","").replace(".",""));
                         valueTotal = valueUang + valueProperti + valueJewelry + valueOther;
                         etTotal.setText(String.valueOf(valueTotal));
                     }catch (Exception ex){
@@ -177,7 +177,7 @@ public class CalculationFragment extends Fragment {
                     valueProperti = 0;
                 } else {
                     try {
-                        valueProperti = Long.parseLong(etProperti.getText().toString().replace(",",""));
+                        valueProperti = Long.parseLong(etProperti.getText().toString().replace(",","").replace(".",""));
                         valueTotal = valueUang + valueProperti + valueJewelry + valueOther;
                         etTotal.setText(String.valueOf(valueTotal));
                     }catch (Exception ex){
@@ -201,7 +201,7 @@ public class CalculationFragment extends Fragment {
                     valueJewelry = 0;
                 } else {
                     try {
-                        valueJewelry = Long.parseLong(etJewerly.getText().toString().replace(",",""));
+                        valueJewelry = Long.parseLong(etJewerly.getText().toString().replace(",","").replace(".",""));
                         valueTotal = valueUang + valueProperti + valueJewelry + valueOther;
                         etTotal.setText(String.valueOf(valueTotal));
                     }catch (Exception ex){
@@ -225,7 +225,7 @@ public class CalculationFragment extends Fragment {
                     valueOther = 0;
                 } else {
                     try {
-                        valueOther = Long.parseLong(etOther.getText().toString().replace(",",""));
+                        valueOther = Long.parseLong(etOther.getText().toString().replace(",","").replace(".",""));
                         valueTotal = valueUang + valueProperti + valueJewelry + valueOther;
                         etTotal.setText(String.valueOf(valueTotal));
                     }catch (Exception ex){
@@ -249,7 +249,7 @@ public class CalculationFragment extends Fragment {
                     valueGold = 0;
                 } else {
                     try {
-                        valueGold = Long.parseLong(etGoldperGram.getText().toString().replace(",",""));
+                        valueGold = Long.parseLong(etGoldperGram.getText().toString().replace(",","").replace(".",""));
                         nishab = (long) (valueGold * Constant.NISHAB_CALC);
                         etNishab.setText(String.valueOf(nishab));
                     }catch (Exception ex){
